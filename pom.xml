@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- комментарий ctrl + / -->
+    <!-- pom.xml - основной файл сборки maven, который описывает проект -->
+
+    <!-- 1. GAV - обязательная информация -->
+    <groupId>ru.ifmo</groupId>
+    <artifactId>maven-lesson</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <!-- 2. Дополнительная информация о проекте -->
+    <name>Maven Lesson</name> <!-- название проекта -->
+    <description>Project description...</description> <!-- небольшое описание проекта -->
+    <url>https://maven-lesson.com</url>
+
+    <!-- 3. Тип файла, который будет доступен в результате сборки -->
+    <!-- jar - по умолчанию / war (web) /
+         pom (для родительского модуля в модульной сборке) / ear -->
+    <packaging>jar</packaging>
+
+    <!-- 4. Свойства проекта -->
+    <properties>
+        <!-- минимальная версия -->
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- локальные переменные -->
+        <lib.version>3.7</lib.version>
+    </properties>
+
+    <!-- 5. Репозитории - место, где хранятся артефакты: jar, war и тд файлы -->
+    <!-- 5.1. Локальный (на каждого пользователя) /.m2/repository -->
+    <!-- 5.2. Центральный (глобальный) -->
+    <!-- 5.3. Корпоративный -->
+    <!-- <repositories>
+        <repository>
+            <id>company-id-01</id>
+            <url>company.com/repo</url>
+        </repository>
+        <repository>
+            <id>company-id-02</id>
+            <url>company.com/repo</url>
+        </repository>
+    </repositories> -->
+
+    <!-- 6. Зависимости -->
+    <dependencies> <!-- все зависимости -->
+
+        <!-- изначально поиск происходит в локальном репозитории,
+             если зависимость не найдена, в центральном -->
+        <!-- <dependency>  каждая конкретная зависимость -->
+            <!-- <groupId></groupId>  обязательная информация -->
+            <!-- <artifactId></artifactId> обязательная информация -->
+            <!-- <version>1.2</version> если не указывать, будет использоваться последняя версия -->
+            <!-- если версия указана, как '1.2' изначально поиск происходит в локальном репозитории,
+             если зависимость не найдена, в центральном -->
+            <!-- <version>1.2-SNAPSHOT</version> SNAPSHOT - версия в разработке -->
+            <!-- если версия указана, как '1.2-SNAPSHOT' при каждой сборке проекта maven проверяет наличие
+            обновлений в центральном репозитории и загружает последнее -->
+            <!-- Область видимости зависимости: -->
+            <!-- <scope>compile</scope> значение по умолчанию, зависимость доступна
+                                        во время сборки (компиляции), тестирования, выполнения-->
+            <!-- <scope>test</scope> зависимость доступна во время тестирования -->
+            <!-- <scope>provided</scope> код библиотеки не попадет в скомпилированные файлы и итоговый архив
+                                          (аналогична compile, но не попадет в сборку). Обычно такие зависимости
+                                          связаны с генерацией кода -->
+            <!-- <scope>system</scope>
+                 <systemPath>путь к библиотеке на компьютере разработчика</systemPath> -->
+
+            <!-- <scope>import</scope> используется в модульной сборки -->
+            <!-- <scope>runtime</scope> зависимость доступна только во время выполнения.
+                                        Нет прямого доступа к коду библиотеки (import невозможен)
+                                        при написании кода -->
+        <!-- </dependency> -->
+
+        <dependency> <!-- генерация геттеров, сеттеров, конструкторов -->
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+    </dependencies>
+
+    <!-- Основные фазы сборки (основные этапы жизненного цикла): -->
+    <!-- 1. clean - удаление папки target со всем ее содержимым (фаза может выполняться самостоятельно или
+            предшествовать другим фазам, например compile)  -->
+    <!-- 2. validate - проверка исходного кода  -->
+    <!-- 3. compile - компиляция (фазе предшествуют фазы clean и validate)  -->
+    <!-- 4. test - запуск тестов (фаза выполняется самостоятельно)  -->
+    <!-- 5. package - создание архива, тип определен тегом packaging
+            (фазе предшествуют фазы clean, validate, compile)  -->
+    <!-- 6. verify - проверяет артефакт для последующей отправки в maven репозиторий  -->
+    <!-- 7. install - добавление артефакта в локальный репозиторий  -->
+    <!-- 8. deploy - добавление артефакта в удаленный репозиторий  -->
+    <!-- 9. site - генерация документации, сайта проекта  -->
+
+    <!-- Сами по себе фазы ничего не делают, не выполняют задач.
+         К фазам необходимо подключать плагины,
+         которые выполняют поставленные перед ними задачи.
+         К одной фазе можно подключить несколько плагинов,
+         каждый плагин может выполнять несколько задач.
+         Если к фазе не подключено ни одного плагина, то задачи,
+         поставленные перед фазой просто не будут выполнены. -->
+
+    <build>
+        <plugins> <!-- все плагины -->
+            <!-- можно использовать плагины, подключенные по умолчанию,
+                 можно настаивать их или заменять другими -->
+
+            <plugin> <!-- конкретный плагин (генерация сайта приложения) -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>3.9.1</version>
+                <configuration> <!-- дополнительные настройки плагина-->
+                    <!-- на каких языках должен быть сгенерированы страницы -->
+                    <locales>en,ru</locales>
+                </configuration>
+                <!-- по умолчанию привязан к фазе site -->
+            </plugin>
+
+            <plugin> <!-- генерация документации -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
+                <!--   дополнительные настройки плагина-->
+                <configuration>
+                    <show>private</show>
+                </configuration>
+                <!-- привязка к фазам сборки-->
+                <executions>
+                    <execution>
+                        <phase>site</phase> <!-- привязали к фазе site-->
+                        <goals>
+                            <!-- задача, которую должен выполнить плагин на указанных фазах сборки-->
+                            <goal>aggregate</goal> <!-- создать документация -->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

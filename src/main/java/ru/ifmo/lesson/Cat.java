@@ -1,12 +1,18 @@
 package ru.ifmo.lesson;
 
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
-@ToString
+@ToString(exclude = "name")
+// @ToString(exclude = {"name", "age"})
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class Cat {
+    @Setter
+    @NonNull
     private String name;
+
     private String color;
+    @Setter
     private int age;
 }

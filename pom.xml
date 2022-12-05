@@ -125,6 +125,8 @@
                 <!-- по умолчанию привязан к фазе site -->
             </plugin>
 
+            <!-- Переменные среды-->
+            <!-- JAVA_HOME: D:\Java\JDK-17 -->
             <plugin> <!-- генерация документации -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -133,7 +135,7 @@
                 <configuration>
                     <show>private</show>
                 </configuration>
-                <!-- привязка к фазам сборки-->
+                <!-- привязка к фазам сборки -->
                 <executions>
                     <execution>
                         <phase>site</phase> <!-- привязали к фазе site-->
@@ -148,3 +150,14 @@
     </build>
 
 </project>
+
+
+<!-- 1. создать maven проект (без модулей) -->
+<!-- 2. подключить библиотеки:
+        2.1 apache httpclient
+        2.2 jackson-core
+        2.3 jackson-annotations
+        2.4 jackson-databind
+        2.5 jackson-datatype-jsr310 -->
+
+<!-- postgresql -->

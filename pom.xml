@@ -146,6 +146,35 @@
                     </execution>
                 </executions>
             </plugin>
+
+
+            <!-- вместо jar плагина для генерации исполняемого архива с зависимостями и без них-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.3</version>
+
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <!-- чтобы jar стал исполняемым необходимо указать ссылку на класс
+                         с точкой входа-->
+                    <transformers>
+                        <transformer
+                                implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <mainClass>ru.ifmo.lesson.Application</mainClass>
+                        </transformer>
+                    </transformers>
+                </configuration>
+
+            </plugin>
         </plugins>
     </build>
 
